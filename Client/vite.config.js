@@ -5,6 +5,13 @@ import path from 'node:path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  },
+
   resolve: {
     alias: {
       '@': path.resolve(process.cwd(), 'src'),
