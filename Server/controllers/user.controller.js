@@ -13,7 +13,7 @@ export const register = async (req,res,next)=>{
         }
         const user = await User.findOne({email})
         if(user){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:'User already exists with the email'
             })
@@ -49,7 +49,7 @@ export const login  = async (req,res,next)=>{
 
         const user = await User.findOne({email})
         if(!user){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:'Incorrect email or password'
             })
@@ -57,7 +57,7 @@ export const login  = async (req,res,next)=>{
 
         const isPasswordMatch = await bcrypt.compare(password,user.password);
         if(!isPasswordMatch){
-            res.status(400).json({
+            return res.status(400).json({
                 success:false,
                 message:'Incorrect email or password'
             })

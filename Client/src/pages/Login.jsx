@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardAction,
@@ -12,6 +12,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "@/features/api/authapi.js";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 const Login = () => {
   const [loginINput, setLoginInput] = useState({ email: "", password: "" });
   const [signupINput, setSignupInput] = useState({
@@ -19,7 +25,24 @@ const Login = () => {
     email: "",
     password: "",
   });
-
+  const [
+    registerUser,
+    {
+      data: registerData,
+      error: registerError,
+      isLoading: registerIsLoading,
+      isSuccess: registerIsSucess,
+    },
+  ] = useRegisterUserMutation();
+  const [
+    loginUser,
+    {
+      data: loginData,
+      error: loginError,
+      isLoading: loginIsLoading,
+      isSuccess: loginIsSuccess,
+    },
+  ] = useLoginUserMutation();
   const changeInput = (e, type) => {
     const { name, value } = e.target;
     if (type === "signup") {
@@ -28,12 +51,31 @@ const Login = () => {
       setLoginInput({ ...loginINput, [name]: value });
     }
   };
-  const handleRegistration = (type) => {
-    if (type === "signup") console.log(signupINput);
-    else console.log(loginINput);
+  const handleRegistration = async (type) => {
+    const inputData = type === "signup" ? signupINput : loginINput;
+    const action = type === "signup" ? registerUser : loginUser;
+    await action(inputData);
   };
+
+  useEffect(() => {
+    if (registerIsSucess && registerData)
+      toast.success(registerData.message || "SignUp successful");
+    if (registerError)
+      toast.error(registerError?.data?.message || "Signup Failed");
+    if (loginIsSuccess && loginData)
+      toast.success(loginData.message || "Login successful");
+    if (loginError) toast.error(loginError?.data?.message || "Login Failed");
+  }, [
+    loginIsLoading,
+    registerIsLoading,
+    loginData,
+    registerData,
+    loginError,
+    registerError,
+  ]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted">
+    <div className="min-h-screen flex items-center justify-center bg-muted mt-20">
       <Tabs defaultValue="login" className="w-[400px]">
         <TabsList>
           <TabsTrigger value="login">Login</TabsTrigger>
@@ -46,7 +88,12 @@ const Login = () => {
               <CardDescription>Login to your existing account</CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleRegistration("login");
+                }}
+              >
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
@@ -68,7 +115,6 @@ const Login = () => {
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
-                        
                       </a>
                     </div>
                     <Input
@@ -80,10 +126,18 @@ const Login = () => {
                       required
                     />
                     <Button
+                      type="submit"
+                      disabled={loginIsLoading}
                       className="w-full"
-                      onClick={() => handleRegistration("login")}
                     >
-                      Login
+                      {loginIsLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Please Wait
+                        </>
+                      ) : (
+                        "Login"
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -102,7 +156,12 @@ const Login = () => {
             </CardHeader>
 
             <CardContent>
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleRegistration("signup");
+                }}
+              >
                 <div className="flex flex-col gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="name">Full Name</Label>
@@ -154,10 +213,18 @@ const Login = () => {
                   </div>
 
                   <Button
+                    type="submit"
+                    disabled={registerIsLoading}
                     className="w-full"
-                    onClick={() => handleRegistration("signup")}
                   >
-                    Create Account
+                    {registerIsLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Please Wait
+                      </>
+                    ) : (
+                      "Signup"
+                    )}
                   </Button>
                 </div>
               </form>
