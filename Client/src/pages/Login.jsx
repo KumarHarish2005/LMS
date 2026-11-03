@@ -18,6 +18,7 @@ import {
 } from "@/features/api/authapi.js";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [loginINput, setLoginInput] = useState({ email: "", password: "" });
   const [signupINput, setSignupInput] = useState({
@@ -43,6 +44,7 @@ const Login = () => {
       isSuccess: loginIsSuccess,
     },
   ] = useLoginUserMutation();
+  const navigate = useNavigate();
   const changeInput = (e, type) => {
     const { name, value } = e.target;
     if (type === "signup") {
@@ -58,12 +60,16 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (registerIsSucess && registerData)
+    if (registerIsSucess && registerData){
       toast.success(registerData.message || "SignUp successful");
+      navigate('/');
+    }
     if (registerError)
       toast.error(registerError?.data?.message || "Signup Failed");
-    if (loginIsSuccess && loginData)
+    if (loginIsSuccess && loginData){
       toast.success(loginData.message || "Login successful");
+      navigate('/')
+    }
     if (loginError) toast.error(loginError?.data?.message || "Login Failed");
   }, [
     loginIsLoading,
@@ -75,7 +81,7 @@ const Login = () => {
   ]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted mt-20">
+    <div className=" login-page min-h-screen flex items-center justify-center bg-muted mt-20 ">
       <Tabs defaultValue="login" className="w-[400px]">
         <TabsList>
           <TabsTrigger value="login">Login</TabsTrigger>
@@ -103,6 +109,7 @@ const Login = () => {
                       name="email"
                       value={loginINput.email}
                       placeholder="m@example.com"
+                      className="placeholder:text-gray-500"
                       onChange={(e) => changeInput(e, "login")}
                       required
                     />
@@ -122,6 +129,7 @@ const Login = () => {
                       type="password"
                       onChange={(e) => changeInput(e, "login")}
                       name="password"
+                      className="placeholder:text-gray-500"
                       value={loginINput.password}
                       required
                     />
