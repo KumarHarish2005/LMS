@@ -13,55 +13,19 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Plus, BookOpen } from "lucide-react";
+import { useCreateCourseMutation, useGetCreatorCourseQuery } from "@/features/api/courseapi";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+
+
 
 const CourseTable = () => {
+
+  const {data,isLoading} = useGetCreatorCourseQuery()
+
   const navigate = useNavigate();
 
+  if(isLoading)return <h1>Loading...</h1>
+  console.log(data);
   return (
     <div className="w-full min-h-screen min-w-0 space-y-6 p-4 md:p-8">
 
@@ -111,50 +75,34 @@ const CourseTable = () => {
           </TableHeader>
 
           <TableBody>
-            {invoices.map((invoice) => (
+            {data.courses.map((course) => (
               <TableRow
-                key={invoice.invoice}
+                key={course._id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-800/60"
               >
-                <TableCell className="font-medium">
-                  {invoice.invoice}
-                </TableCell>
+                
 
                 <TableCell>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      invoice.paymentStatus === "Paid"
-                        ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-                        : invoice.paymentStatus === "Pending"
-                        ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
-                        : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
-                    }`}
-                  >
-                    {invoice.paymentStatus}
-                  </span>
+                  
+                    {course._id}
+                  
                 </TableCell>
 
                 <TableCell className="text-gray-600 dark:text-gray-300">
-                  {invoice.paymentMethod}
+                  {course.isPublished===true?"Active":"Not Published"}
                 </TableCell>
 
                 <TableCell className="text-right font-medium">
-                  {invoice.totalAmount}
+                  {course.courseTitle}
+                </TableCell>
+                <TableCell className="text-right font-medium">
+                  {course.coursePrice}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
 
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3} className="font-bold">
-                Total
-              </TableCell>
-              <TableCell className="text-right font-bold">
-                $2,250.00
-              </TableCell>
-            </TableRow>
-          </TableFooter>
+          
         </Table>
       </div>
     </div>
