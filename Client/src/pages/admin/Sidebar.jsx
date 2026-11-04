@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div className="flex mt-16 min-h-screen w-full">
 
       {/* Mobile menu button */}
-<div className="fixed top-16 left-0 z-50 w-full lg:hidden bg-white dark:bg-gray-950 border-b dark:border-gray-700 p-3">
+<div className="fixed top-16 left-0 z-50 w-full lg:hidden bg-white dark:bg-gray-950 border-b dark:border-gray-700 p-3 dark:text-gray-200">
   <button
     onClick={() => setIsOpen(!isOpen)}
     className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800"

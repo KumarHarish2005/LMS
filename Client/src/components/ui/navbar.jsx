@@ -2,6 +2,7 @@ import {
   BookOpen,
   ChevronDown,
   LayoutDashboard,
+  LayoutDashboardIcon,
   LogIn,
   LogOut,
   Menu,
@@ -286,6 +287,15 @@ const MobileNavbar = () => {
                   <button className="flex items-center gap-3 rounded-lg px-3 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                     <BookOpen size={19} />
                     <Link to="my-learning">My Learning</Link>
+                  </button>
+                }
+              />
+
+              <SheetClose
+                render={
+                  <button className="flex items-center gap-3 rounded-lg px-3 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <LayoutDashboardIcon size={19}/>
+                    <Link to="admin">Dashboard</Link>
                   </button>
                 }
               />

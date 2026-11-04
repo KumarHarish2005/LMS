@@ -23,9 +23,38 @@ export const courseApi = createApi({
                 method:"GET"
             }),
             providesTags:['Refetch_creator_course']
+        }),
+        editCourse: builder.mutation({
+            query:({courseData,courseId})=>({
+                url:`/${courseId}`,
+                method:"PUT",
+                body:courseData
+            }),
+            providesTags:['Refetch_creator_course']
+        }),
+        getCourseById: builder.query({
+            query:(courseId)=>({
+                url:`/${courseId}`,
+                method:"GET"
+
+            })
+        }),
+        createLecture: builder.mutation({
+            query: ({lectureTitle,courseId})=>({
+                url:`/${courseId}/lectures`,
+                method:"POST",
+                body:{lectureTitle}
+            })
+        }),
+        getLectures: builder.query({
+            query:(courseId)=>({
+                url:`/${courseId}/lectures`,
+                method:"GET"
+                
+            })
         })
     })
 })
 
-export const { useCreateCourseMutation,useGetCreatorCourseQuery } = courseApi;
+export const { useCreateCourseMutation,useGetCreatorCourseQuery ,useEditCourseMutation,useGetCourseByIdQuery,useCreateLectureMutation,useGetLecturesQuery} = courseApi;
 

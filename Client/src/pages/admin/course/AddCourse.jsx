@@ -43,7 +43,7 @@ const AddCourse = () => {
     }
   },[isSuccess,isError])
   return (
-    <div className="w-full min-w-0 px-4 py-8 sm:px-6 lg:px-10 lg:py-10 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 ">
+    <div className="w-full min-w-0 px-4 py-8 sm:px-6 lg:px-10 lg:py-10 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 md:mt-20  ">
       {/* Heading */}
       <div className="max-w-5xl mx-auto mb-8">
         <h1 className="font-bold text-2xl sm:text-3xl">Let's Add Course</h1>
@@ -82,37 +82,9 @@ const AddCourse = () => {
             />
           </div>
 
-          {/* Subtitle */}
-          <div className="space-y-2">
-            <label htmlFor="courseSubTitle" className="text-sm font-medium">
-              Course Subtitle
-            </label>
-            <input
-              id="courseSubTitle"
-              name="courseSubTitle"
-              type="text"
-              value={courseData.courseSubTitle}
-              onChange={changeHandler}
-              placeholder="A short description of your course"
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
-            />
-          </div>
+          
 
-          {/* Description */}
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-sm font-medium">
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              rows="5"
-              value={courseData.description}
-              onChange={changeHandler}
-              placeholder="What will students learn from this course?"
-              className="w-full resize-y rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
-            />
-          </div>
+          
         </section>
 
         {/* Course Settings */}
@@ -120,7 +92,7 @@ const AddCourse = () => {
           <div>
             <h2 className="font-semibold text-lg">Course Settings</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Set the category, difficulty and price.
+              Set the category
             </p>
           </div>
 
@@ -143,68 +115,14 @@ const AddCourse = () => {
               />
             </div>
 
-            {/* Level */}
-            <div className="space-y-2">
-              <label htmlFor="courseLevel" className="text-sm font-medium">
-                Course Level
-              </label>
-              <select
-                id="courseLevel"
-                name="courseLevel"
-                value={courseData.courseLevel}
-              onChange={changeHandler}
-                
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="Beginner">Beginner</option>
-                <option value="Medium">Medium</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
+         
+           
 
-            {/* Price */}
-            <div className="space-y-2">
-              <label htmlFor="coursePrice" className="text-sm font-medium">
-                Course Price (₹)
-              </label>
-              <input
-                id="coursePrice"
-                name="coursePrice"
-                value={courseData.coursePrice}
-              onChange={changeHandler}
-                type="number"
-                min="0"
-                placeholder="e.g. 999"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+            
           </div>
         </section>
 
-        {/* Thumbnail */}
-        <section className="border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-6 space-y-5">
-          <div>
-            <h2 className="font-semibold text-lg">Course Thumbnail</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Add an image URL for your course thumbnail.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="courseThumbnail" className="text-sm font-medium">
-              Thumbnail URL
-            </label>
-            <input
-              id="courseThumbnail"
-              name="courseThumbnail"
-              type="url"
-              value={courseData.courseThumbnail}
-              onChange={changeHandler}
-              placeholder="https://example.com/thumbnail.jpg"
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
-            />
-          </div>
-        </section>
+        
 
         {/* Actions */}
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-8">
